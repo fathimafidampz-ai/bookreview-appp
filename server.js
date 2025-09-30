@@ -3,6 +3,7 @@
 // New CommonJS require
 const express = require("express");
 const jwt = require("jsonwebtoken");
+
 let users = [];
 
 // Mock data for books
@@ -25,6 +26,9 @@ app.use(express.json());
 
 const SECRET_KEY = "mysecretkey"; // in real apps, keep in .env
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the Book Review API!");
+});
 // Login Route
 // Login existing user
 app.post("/login", (req, res) => {
