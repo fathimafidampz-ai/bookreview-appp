@@ -2,12 +2,12 @@ const axios = require("axios");
 
 const BASE_URL = "http://localhost:3000";
 
-async function getAllBooks() {
+async function getAllBooks(callback) {
   try {
     const response = await axios.get(`${BASE_URL}/books`);
-    console.log("All Books:", response.data);
+     callback(null, response.data);
   } catch (error) {
-    console.error("Error fetching books:", error.message);
+   callback(error, null); 
   }
 }
 function getBookByISBN(isbn) {
@@ -32,7 +32,13 @@ function getBooksByTitle(title) {
 
 
 // Call the function
-getAllBooks();
+getAllBooks((err, books) => {
+  if (err) {
+    console.error("Error fetching books:", err.message);
+  } else {
+    console.log("All Books (via async callback):", books);
+  }
+});
 getBookByISBN("12345");
 getBooksByAuthor("John Smith");
 getBooksByTitle("Node.js Basics");
